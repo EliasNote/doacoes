@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCampaignDto } from 'src/dto/campaign/create-campaign.dto';
-import { Campaign } from 'src/entities/campaign.entity';
+import { Campaign, CampaignStatus } from 'src/entities/campaign.entity';
 import { ResponseCampaignDto } from 'src/dto/campaign/response-campaign.dto';
 import { Repository } from 'typeorm';
+import { UserService } from './user.service';
+import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class CampaignService {
   constructor(
     @InjectRepository(Campaign)
     private campaignRepository: Repository<Campaign>,
+    private userService: UserService,
   ) {}
 
   async create(
@@ -58,6 +61,43 @@ export class CampaignService {
     const current_amount = this.calculateTotalDonated(campaign);
 
     return this.createResponseDto(campaign, current_amount);
+  }
+
+  async findOneCampaign(id: string) {
+    const campaign = await this.campaignRepository.findOne({
+      where: { id },
+      relations: ['donations'],
+    });
+    if (!campaign) return null;
+    return campaign;
+  }
+
+  async update(id: string, query: Record<string, string>) {
+    const dto = {
+      title: query.title,
+      description: query.description,
+      goal_amount: query.goal_amount,
+      end_date: query.end_date,
+      user_id: query.user_id,
+      status: query.status,
+    };
+
+    const campaign: Campaign | null = await this.findOneCampaign(id);
+
+    if (campaign == null)
+      throw new NotFoundException('Campanha não cadastrada');
+
+    if (dto.title != null) campaign.title = dto.title;
+    if (dto.description != null) campaign.description = dto.description;
+    if (dto.goal_amount != null) campaign.goal_amount = dto.goal_amount;
+    if (dto.end_date != null) campaign.end_date = new Date(dto.end_date);
+    if (dto.user_id != null) {
+      const user: User = await this.userService.findOne(dto.user_id);
+      campaign.user = user;
+    }
+    if (dto.status != null) campaign.status = dto.status as CampaignStatus;
+
+    await this.campaignRepository.update(id, campaign);
   }
 
   private calculateTotalDonated(campaign: Campaign): string {

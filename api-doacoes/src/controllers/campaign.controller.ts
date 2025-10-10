@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CreateCampaignDto } from 'src/dto/campaign/create-campaign.dto';
 import { CampaignService } from 'src/services/campaign.service';
 
@@ -19,5 +28,14 @@ export class CampaignController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.campaignService.findOne(id);
+  }
+
+  @Patch(':id')
+  @HttpCode(204)
+  createFromQuery(
+    @Query() query: Record<string, string>,
+    @Param('id') id: string,
+  ) {
+    return this.campaignService.update(id, query);
   }
 }
