@@ -20,7 +20,9 @@ export class Donation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Campaign, (campaign) => campaign.donations)
+  @ManyToOne(() => Campaign, (campaign) => campaign.donations, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'campaign_id' })
   campaign: Campaign;
 

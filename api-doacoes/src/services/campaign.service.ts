@@ -97,7 +97,7 @@ export class CampaignService {
     }
     if (dto.status != null) campaign.status = dto.status as CampaignStatus;
 
-    await this.campaignRepository.update(id, campaign);
+    await this.campaignRepository.save(campaign);
   }
 
   private calculateTotalDonated(campaign: Campaign): string {
