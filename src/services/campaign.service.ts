@@ -4,25 +4,18 @@ import { CreateCampaignDto } from 'src/dto/campaign/create-campaign.dto';
 import { Campaign, CampaignStatus } from 'src/entities/campaign.entity';
 import { ResponseCampaignDto } from 'src/dto/campaign/response-campaign.dto';
 import { Repository } from 'typeorm';
-import { UserService } from './user.service';
-import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class CampaignService {
   constructor(
     @InjectRepository(Campaign)
     private campaignRepository: Repository<Campaign>,
-    private userService: UserService,
   ) {}
 
   async create(
     createCampaignDto: CreateCampaignDto,
   ): Promise<ResponseCampaignDto> {
-    const { user_id, ...rest } = createCampaignDto;
-    const campaign = this.campaignRepository.create({
-      ...rest,
-      user: { id: user_id },
-    });
+    const campaign = this.campaignRepository.create(createCampaignDto);
     const saved = await this.campaignRepository.save(campaign);
     const fullCampaign = await this.campaignRepository.findOne({
       where: { id: saved.id },
@@ -91,10 +84,7 @@ export class CampaignService {
     if (dto.description != null) campaign.description = dto.description;
     if (dto.goal_amount != null) campaign.goal_amount = dto.goal_amount;
     if (dto.end_date != null) campaign.end_date = new Date(dto.end_date);
-    if (dto.user_id != null) {
-      const user: User = await this.userService.findOne(dto.user_id);
-      campaign.user = user;
-    }
+    if (dto.user_id != null) campaign.user_id = dto.user_id;
     if (dto.status != null) campaign.status = dto.status as CampaignStatus;
 
     await this.campaignRepository.save(campaign);

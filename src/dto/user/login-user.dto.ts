@@ -1,12 +1,10 @@
-import { IsString, Matches } from 'class-validator';
+import { IsString, IsEmail } from 'class-validator';
 
 export class LoginUserDto {
   @IsString()
-  @Matches(/^\d{11}$/, {
-    message: 'CPF deve conter exatamente 11 dígitos numéricos',
-  })
-  readonly cpf: string;
+  @IsEmail()
+  email: string;
 
   @IsString()
-  readonly password: string;
+  password: string;
 }

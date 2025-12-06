@@ -2,13 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
-  JoinColumn,
   OneToMany,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from './user.entity';
 import { Donation } from './donation.entity';
 
 export enum CampaignStatus {
@@ -23,9 +20,8 @@ export class Campaign {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  @Column({ type: 'uuid' })
+  user_id: string;
 
   @Column({ type: 'varchar', length: 255 })
   title: string;
