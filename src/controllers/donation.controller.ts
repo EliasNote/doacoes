@@ -15,4 +15,9 @@ export class DonationController {
   findAll() {
     return this.donationService.findAll();
   }
+
+  @Get()
+  createpix(@Body() createDonationDto: CreateDonationDto) {
+    return this.donationService.create(createDonationDto);
+  }
 }
