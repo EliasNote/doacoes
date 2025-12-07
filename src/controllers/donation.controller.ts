@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CreateDonationDto } from 'src/dto/donation/create-donation.dto';
 import { DonationService } from 'src/services/donation.service';
 
@@ -16,8 +16,8 @@ export class DonationController {
     return this.donationService.findAll();
   }
 
-  @Get()
-  createpix(@Body() createDonationDto: CreateDonationDto) {
-    return this.donationService.create(createDonationDto);
+  @Get('/pix')
+  createpix(@Query() query: Record<string, string>) {
+    return this.donationService.create(query as any);
   }
 }

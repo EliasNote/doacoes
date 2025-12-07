@@ -3,6 +3,7 @@ import { CampaignStatus } from '../../entities/campaign.entity';
 
 export class ResponseCampaignDto {
   id: string;
+  user_id: string;
   title: string;
   description: string;
   goal_amount: string;
@@ -15,6 +16,7 @@ export class ResponseCampaignDto {
 
   constructor(
     id: string,
+    user_id: string,
     title: string,
     description: string,
     goal_amount: string,
@@ -26,6 +28,7 @@ export class ResponseCampaignDto {
     current_amount: string,
   ) {
     this.id = id;
+    this.user_id = user_id;
     this.title = title;
     this.description = description;
     this.goal_amount = goal_amount;

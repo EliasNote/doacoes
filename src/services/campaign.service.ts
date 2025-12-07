@@ -33,6 +33,7 @@ export class CampaignService {
       const current_amount = this.calculateTotalDonated(c);
       return {
         id: c.id,
+        user_id: c.user_id,
         title: c.title,
         description: c.description,
         goal_amount: c.goal_amount,
@@ -100,6 +101,7 @@ export class CampaignService {
   private createResponseDto(campaign: Campaign, current_amount: string) {
     return new ResponseCampaignDto(
       campaign.id,
+      campaign.user_id,
       campaign.title,
       campaign.description,
       campaign.goal_amount,
