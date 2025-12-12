@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -37,5 +38,11 @@ export class CampaignController {
     @Param('id') id: string,
   ) {
     return this.campaignService.update(id, query);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async remove(@Param('id') id: string) {
+    await this.campaignService.remove(id);
   }
 }

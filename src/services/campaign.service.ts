@@ -91,6 +91,12 @@ export class CampaignService {
     await this.campaignRepository.save(campaign);
   }
 
+  async remove(id: string) {
+    const campaign = await this.campaignRepository.findOne({ where: { id } });
+    if (!campaign) throw new NotFoundException('Campanha não cadastrada');
+    await this.campaignRepository.remove(campaign);
+  }
+
   private calculateTotalDonated(campaign: Campaign): string {
     if (!campaign.donations || campaign.donations.length === 0) return '0.00';
     return campaign.donations

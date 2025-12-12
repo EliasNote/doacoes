@@ -26,10 +26,10 @@ export class Donation {
   @JoinColumn({ name: 'campaign_id' })
   campaign: Campaign;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 11 })
+  @Column({ type: 'varchar', length: 11, nullable: true })
   cpf: string;
 
   @Column({ type: 'uuid', nullable: true })
