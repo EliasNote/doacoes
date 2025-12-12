@@ -30,6 +30,11 @@ export class CampaignController {
     return this.campaignService.findOne(id);
   }
 
+  @Get('/user/:userId/donations')
+  findDonationsByUser(@Param('userId') userId: string) {
+    return this.campaignService.findDonationsByUser(userId);
+  }
+
   @Patch(':id')
   @HttpCode(204)
   createFromQuery(

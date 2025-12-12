@@ -24,11 +24,4 @@ export class DonationService {
   findAll() {
     return this.donationRepository.find();
   }
-
-  async findByUser(userId: string): Promise<Donation[]> {
-    return this.donationRepository.find({
-      where: { campaign: { user_id: userId } },
-      relations: ['campaign'],
-    });
-  }
 }

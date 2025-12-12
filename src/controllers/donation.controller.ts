@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CreateDonationDto } from 'src/dto/donation/create-donation.dto';
 import { DonationService } from 'src/services/donation.service';
 
@@ -14,11 +14,6 @@ export class DonationController {
   @Get()
   findAll() {
     return this.donationService.findAll();
-  }
-
-  @Get('/user/:userId')
-  findByUser(@Param('userId') userId: string) {
-    return this.donationService.findByUser(userId);
   }
 
   @Get('/pix')
