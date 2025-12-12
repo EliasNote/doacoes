@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Donation } from 'src/entities/donation.entity';
+import { Donation, DonationStatus } from 'src/entities/donation.entity';
 import { CreateDonationDto } from 'src/dto/donation/create-donation.dto';
 import { Repository } from 'typeorm';
 
@@ -15,6 +15,7 @@ export class DonationService {
     const { campaign_id, ...rest } = createDonationDto;
     const donation = this.donationRepository.create({
       ...rest,
+      status: DonationStatus.PAID,
       campaign: { id: campaign_id },
     });
     return this.donationRepository.save(donation);
