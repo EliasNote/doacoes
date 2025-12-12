@@ -35,6 +35,9 @@ export class Donation {
   @Column({ type: 'uuid', nullable: true })
   user_id: string;
 
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  payment_method: string | null;
+
   @Column({ type: 'decimal', scale: 2, default: 0 })
   amount: string;
 

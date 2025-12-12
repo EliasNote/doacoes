@@ -12,11 +12,12 @@ export class DonationService {
   ) {}
 
   create(createDonationDto: CreateDonationDto) {
-    const { campaign_id, user_id, ...rest } = createDonationDto;
+    const { campaign_id, user_id, payment_method, ...rest } = createDonationDto;
     const donation = this.donationRepository.create({
       ...rest,
       status: DonationStatus.PAID,
       user_id,
+      payment_method,
       campaign: { id: campaign_id },
     });
     return this.donationRepository.save(donation);

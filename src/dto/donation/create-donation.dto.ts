@@ -15,6 +15,10 @@ export class CreateDonationDto {
   readonly user_id: string;
 
   @IsString()
+  @IsOptional()
+  readonly payment_method?: string;
+
+  @IsString()
   readonly name: string;
 
   @IsString()
