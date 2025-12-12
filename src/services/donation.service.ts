@@ -12,10 +12,11 @@ export class DonationService {
   ) {}
 
   create(createDonationDto: CreateDonationDto) {
-    const { campaign_id, ...rest } = createDonationDto;
+    const { campaign_id, user_id, ...rest } = createDonationDto;
     const donation = this.donationRepository.create({
       ...rest,
       status: DonationStatus.PAID,
+      user_id,
       campaign: { id: campaign_id },
     });
     return this.donationRepository.save(donation);
@@ -23,5 +24,9 @@ export class DonationService {
 
   findAll() {
     return this.donationRepository.find();
+  }
+
+  async findByUser(userId: string): Promise<Donation[]> {
+    return this.donationRepository.find({ where: { user_id: userId } });
   }
 }

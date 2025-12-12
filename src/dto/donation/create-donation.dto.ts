@@ -11,6 +11,9 @@ export class CreateDonationDto {
   @IsUUID()
   readonly campaign_id: string;
 
+  @IsUUID()
+  readonly user_id: string;
+
   @IsString()
   readonly name: string;
 

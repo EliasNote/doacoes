@@ -32,6 +32,9 @@ export class Donation {
   @Column({ type: 'varchar', length: 11 })
   cpf: string;
 
+  @Column({ type: 'uuid' })
+  user_id: string;
+
   @Column({ type: 'decimal', scale: 2, default: 0 })
   amount: string;
 

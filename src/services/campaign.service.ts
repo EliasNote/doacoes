@@ -66,21 +66,6 @@ export class CampaignService {
     return campaign;
   }
 
-  async findDonationsByUser(userId: string) {
-    const campaigns = await this.campaignRepository.find({
-      where: { user_id: userId },
-      relations: ['donations'],
-    });
-    const donations = campaigns.flatMap((c) =>
-      (c.donations || []).map((d) => ({
-        ...d,
-        campaign_id: c.id,
-        campaign_title: c.title,
-      })),
-    );
-    return donations;
-  }
-
   async update(id: string, query: Record<string, string>) {
     const dto = {
       title: query.title,
