@@ -19,10 +19,10 @@ export class CreateDonationDto {
   readonly payment_method?: string;
 
   @IsString()
-  readonly name: string;
+  readonly name?: string;
 
   @IsString()
-  readonly cpf: string;
+  readonly cpf?: string;
 
   @IsNumberString()
   readonly amount: string;
