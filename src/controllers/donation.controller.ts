@@ -21,7 +21,7 @@ export class DonationController {
     return this.donationService.findByUser(userId);
   }
 
-  @Get('/pix')
+  @Get('/pagamento')
   createpix(@Query() query: Record<string, string>) {
     return this.donationService.create(query as any);
   }
